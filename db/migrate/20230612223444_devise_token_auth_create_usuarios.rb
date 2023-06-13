@@ -32,10 +32,12 @@ class DeviseTokenAuthCreateUsuarios < ActiveRecord::Migration[7.0]
       t.string :name, null: false, default: ""
       t.string :image
       t.string :email, null: false, default: ""
-      t.integer :idade, null: false, default: ""
+      t.date :data_nascimento, null: false, default: ""
       t.bigint :cpf, null: false, default: ""
       t.string :sexo, null: false, default: ""
       t.bigint :celular, null: false, default: ""
+      t.string :endereco
+      t.string :acesso, null: false, default: "cliente"
 
       ## Tokens
       t.json :tokens

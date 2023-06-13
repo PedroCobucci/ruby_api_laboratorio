@@ -4,6 +4,7 @@ class CreateExames < ActiveRecord::Migration[7.0]
       t.string :resultado, null: false, default: ""
       t.string :descricao, null: false, default: ""
       t.string :anexo, null: true, default: ""
+      t.date :data, null: true, default: ""
 
       t.timestamps
     end

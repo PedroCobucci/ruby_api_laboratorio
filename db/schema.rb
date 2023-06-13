@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_224026) do
     t.string "resultado", default: "", null: false
     t.string "descricao", default: "", null: false
     t.string "anexo", default: ""
+    t.date "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "paciente_id", null: false
@@ -39,10 +40,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_224026) do
     t.string "name", default: "", null: false
     t.string "image"
     t.string "email", default: "", null: false
-    t.integer "idade", null: false
+    t.date "data_nascimento", null: false
     t.bigint "cpf", null: false
     t.string "sexo", default: "", null: false
     t.bigint "celular", null: false
+    t.string "endereco"
+    t.string "acesso", default: "cliente", null: false
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

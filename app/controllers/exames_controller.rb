@@ -1,21 +1,34 @@
 class ExamesController < ApplicationController
-  before_action :set_exame, only: %i[ show update destroy ]
+  before_action :authenticate_usuario!
+  before_action :user_access?, only: %i[ create update destroy ]
+  before_action :set_exame, only: %i[ update destroy ]
 
   # GET /exames
   def index
-    @exames = Exame.all
+    exame_proxy = ExameProxy.new(current_usuario)
 
-    render json: @exames
+    exames = exame_proxy.getAllExames
+
+    render json: exames
   end
 
   # GET /exames/1
   def show
-    render json: @exame
+    exame_proxy = ExameProxy.new(current_usuario)
+
+    exames = exame_proxy.getExame(params[:id])
+
+    render json: exames
   end
 
   # POST /exames
   def create
+
     @exame = Exame.new(exame_params)
+
+    paciente = Usuario.find_by(cpf: params[:paciente_cpf])
+
+    @exame.paciente_id = paciente.id
 
     if @exame.save
       render json: @exame, status: :created, location: @exame
@@ -42,6 +55,15 @@ class ExamesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_exame
       @exame = Exame.find(params[:id])
+    end
+
+    def user_access?
+      if current_usuario.acesso == 'funcionario'
+        return true
+      else
+        render json: {error: 'Unauthorized'}, status: :unauthorized
+        return false
+      end
     end
 
     # Only allow a list of trusted parameters through.
