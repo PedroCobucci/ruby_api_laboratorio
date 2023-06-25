@@ -25,7 +25,7 @@ Exemplo de resposta:
     "data": "2023-06-25",
     "created_at": "2023-06-25T12:00:00Z",
     "updated_at": "2023-06-25T12:00:00Z",
-    "paciente_id: 1
+    "paciente_id": 1
   },
   {
     "id": 2,
@@ -35,7 +35,7 @@ Exemplo de resposta:
     "data": "2023-06-26",
     "created_at": "2023-06-26T12:00:00Z",
     "updated_at": "2023-06-26T12:00:00Z",
-    "paciente_id: 1
+    "paciente_id": 1
   }
   ...
 ]
@@ -82,8 +82,6 @@ POST /exames
 
 **Corpo da Requisição**
 ```json
-Content-Type: application/json
-
 {
   "resultado": "resultado do exame",
   "descricao": "descrição do exame",
@@ -93,44 +91,57 @@ Content-Type: application/json
 }
 ```
 
+**Resposta**
 
-Atualizar Exame
+- Status: 201 Created
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
+{
+  "id": 3,
+  "resultado": "resultado do exame",
+  "descricao": "descrição do exame",
+  "anexo": "caminho/para/anexo",
+  "data": "2000-10-10",
+  "created_at": "2023-06-26T12:00:00Z",
+  "updated_at": "2023-06-26T12:00:00Z",
+  "paciente_id": 3
+}
+```
+
+### Atualizar Exame
+
 Atualiza as informações de um exame existente.
 
-Requisição
-
-bash
- 
+**Requisição**
+```
 PATCH /exames/:id
-Parâmetros de URL
+```
 
-:id - O ID do exame a ser atualizado.
-Corpo da Requisição
+**Parâmetros de URL**
+- `:id` - O ID do exame a ser atualizado.
 
-json
- 
-Content-Type: application/json
+**Corpo da Requisição
 
+**
+```json
 {
-  "resultado": "a",
-  "descricao": "b",
-  "anexo": "s",
-  "data": "2000-11-10",
+  "resultado": "novo resultado do exame",
+  "descricao": "nova descrição do exame",
+  "anexo": "novo caminho/para/anexo",
+  "data": "2023-06-25",
   "paciente_cpf": 3
 }
-Parâmetros do Corpo
+```
 
-resultado - O novo resultado do exame.
-descricao - A nova descrição do exame.
-anexo - O novo caminho/URL para um anexo relacionado ao exame.
-Resposta
+**Resposta**
 
-Status: 200 OK
-Content-Type: application/json
+- Status: 200 OK
+- Content-Type: application/json
+
 Exemplo de resposta:
-
-json
- 
+```json
 {
   "id": 1,
   "resultado": "novo resultado do exame",
@@ -138,45 +149,38 @@ json
   "anexo": "novo caminho/para/anexo",
   "data": "2023-06-25",
   "created_at": "2023-06-25T12:00:00Z",
-  "updated_at": "2023-06-26T12:00:00Z"
+  "updated_at": "2023-06-26T12:00:00Z",
+  "paciente_id": 3
 }
+```
 
+### Excluir Exame
 
-
-Excluir Exame
 Remove um exame do sistema.
 
-Requisição
-
-bash
- 
+**Requisição**
+```
 DELETE /exames/:id
-Parâmetros de URL
+```
 
-:id - O ID do exame a ser excluído.
-Resposta
+**Parâmetros de URL**
+- `:id` - O ID do exame a ser excluído.
 
-Status: 204 No Content
-A operação de exclusão não retorna conteúdo no corpo da resposta.
+**Resposta**
 
+- Status: 204 No Content
 
+### Cadastro de Novo Cliente
 
+Registra um novo cliente na API.
 
-
-
-
-Cadastro de Novo Cliente
-Registers a new client in the API.
-
-Request
-
-bash
- 
+**Requisição**
+```
 POST /auth
-Request Body
+```
 
-json
- 
+**Corpo da Requisição**
+```json
 {
   "email": "cliente3@gmail.com",
   "password": "cliente1234",
@@ -189,76 +193,55 @@ json
   "endereco": "rua x 202 santo antonio",
   "acesso": "cliente"
 }
-Response
+```
 
-Status: 200 OK
-Autenticação do Cliente
-Authenticates the client and returns the login credentials.
+**Resposta**
 
-Request
+- Status: 200 OK
 
-bash
- 
+### Autenticação do Cliente
+
+Autentica o cliente e retorna as credenciais de login.
+
+**Requisição**
+```
 POST /auth/sign_in
-Request Body
+```
 
-json
- 
+**Corpo da Requisição**
+```json
 {
   "email": "cliente3@gmail.com",
   "password": "cliente1234"
 }
-Response
+```
 
-Status: 200 OK
-Headers:
-access-token: Client access token
-client: Client ID
-uid: Client UID
+**Resposta**
 
+- Status: 200 OK
+- Headers:
+  - access-token: Client access token
+  - client: Client ID
+  - uid: Client UID
 
+### Listar Usuários
 
-Exemplo: Listar usuários
-Requisição:
+Retorna uma lista de todos os usuários cadastrados.
 
-bash
-
+**Requisição**
+```
 GET /users
-Resposta:
+```
 
-json
- 
+**Resposta**
+
+- Status: 200 OK
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
 [
-    {
-        "id": 1,
-        "name": "Usuário 1",
-        "celular": 123456789,
-        "sexo": "Masculino",
-        "cpf": 1234567890,
-        "data_nascimento": "1990-01-01",
-        "endereco": "Rua XYZ, 123"
-    },
-    {
-        "id": 2,
-        "name": "Usuário 2",
-        "celular": 987654321,
-        "sexo": "Feminino",
-        "cpf": 9876543210,
-        "data_nascimento": "1980-02-02",
-        "endereco": "Rua ABC, 456"
-    }
-]
-Exemplo: Exibir detalhes de um usuário
-Requisição:
-
-bash
-
-GET /users/1
-Resposta:
-
-json
- 
-{
+  {
     "id": 1,
     "name": "Usuário 1",
     "celular": 123456789,
@@ -266,84 +249,168 @@ json
     "cpf": 1234567890,
     "data_nascimento": "1990-01-01",
     "endereco": "Rua XYZ, 123"
-}
-Exemplo: Atualizar um usuário
-Requisição:
-
-bash
-PATCH /users/1
-Corpo da solicitação:
-
-json
- 
-{
-    "name": "a",
-    "celular": 123, 
-    "sexo": "A" , 
-    "cpf": 123, 
-    "data_nascimento": "2100-01-01",
-    "endereco": "rua tal 123 lavras"
-}
-Resposta:
-
-json
- 
-{
-    "id": 1,
-    "name": "Novo Nome",
+  },
+  {
+    "id": 2,
+    "name": "Usuário 2",
     "celular": 987654321,
-    "sexo": "Masculino",
-    "cpf": 1234567890,
-    "data_nascimento": "1990-01-01",
-    "endereco": "Rua XYZ, 123"
+    "sexo": "Feminino",
+    "cpf": 9876543210,
+    "data_nascimento": "1980-02-02",
+    "endereco": "Rua ABC, 456"
+  }
+  ...
+]
+```
+
+### Obter Detalhes de um Usuário
+
+Retorna os detalhes de um usuário
+
+ específico.
+
+**Requisição**
+```
+GET /users/:id
+```
+
+**Parâmetros de URL**
+- `:id` - O ID do usuário desejado.
+
+**Resposta**
+
+- Status: 200 OK
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
+{
+  "id": 1,
+  "name": "Usuário 1",
+  "celular": 123456789,
+  "sexo": "Masculino",
+  "cpf": 1234567890,
+  "data_nascimento": "1990-01-01",
+  "endereco": "Rua XYZ, 123"
 }
-Exemplo: Excluir um usuário
-Requisição:
+```
 
-bash
- 
-DELETE /users/1
-Resposta:
-Código de status 204 No Content
+### Atualizar um Usuário
 
-Exemplo: Buscar usuário por CPF
-Requisição:
+Atualiza as informações de um usuário existente.
 
-bash
- 
+**Requisição**
+```
+PATCH /users/:id
+```
+
+**Parâmetros de URL**
+- `:id` - O ID do usuário a ser atualizado.
+
+**Corpo da Requisição**
+```json
+Content-Type: application/json
+
+{
+  "name": "Novo Nome",
+  "celular": 987654321,
+  "sexo": "Masculino",
+  "cpf": 1234567890,
+  "data_nascimento": "1990-01-01",
+  "endereco": "Rua XYZ, 123"
+}
+```
+
+**Resposta**
+
+- Status: 200 OK
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
+{
+  "id": 1,
+  "name": "Novo Nome",
+  "celular": 987654321,
+  "sexo": "Masculino",
+  "cpf": 1234567890,
+  "data_nascimento": "1990-01-01",
+  "endereco": "Rua XYZ, 123"
+}
+```
+
+### Excluir um Usuário
+
+Remove um usuário do sistema.
+
+**Requisição**
+```
+DELETE /users/:id
+```
+
+**Parâmetros de URL**
+- `:id` - O ID do usuário a ser excluído.
+
+**Resposta**
+
+- Status: 204 No Content
+
+### Buscar Usuário por CPF
+
+Retorna os detalhes de um usuário específico com base no CPF.
+
+**Requisição**
+```
 GET /users/getUsuarioByCPF?cpf=1234567890
-Resposta:
+```
 
-json
- 
+**Parâmetros de URL**
+- `cpf` - O CPF do usuário desejado.
+
+**Resposta**
+
+- Status: 200 OK
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
 {
-    "id": 1,
-    "name": "Usuário 1",
-    "celular": 123456789,
-    "sexo": "Masculino",
-    "cpf": 1234567890,
-    "data_nascimento": "1990-01-01",
-    "endereco": "Rua XYZ, 123"
+  "id": 1,
+  "name": "Usuário 1",
+  "celular": 123456789,
+  "sexo": "Masculino",
+  "cpf": 1234567890,
+  "data_nascimento": "1990-01-01",
+  "endereco": "Rua XYZ, 123"
 }
-Exemplo: Verificar senha do usuário
-Requisição:
+```
 
-bash
- 
+### Verificar Senha do Usuário
+
+Verifica se a senha fornecida pelo usuário é válida.
+
+**Requisição**
+```
 POST /users/checkPassword
-Corpo da solicitação:
+```
 
-json
- 
+**Corpo da Requisição**
+```json
+Content-Type: application/json
+
 {
-    "password": "senha"
+  "password": "senha"
 }
-Resposta:
+```
 
-json
- 
+**Resposta**
+
+- Status: 200 OK
+- Content-Type: application/json
+
+Exemplo de resposta:
+```json
 {
-    "valid_password": true
+  "valid_password": true
 }
-
-
+```
