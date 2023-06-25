@@ -7,5 +7,5 @@ class Usuario < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
-  has_many :exame, dependent: :destroy
+  has_many :exames, foreign_key: 'paciente_id', dependent: :destroy
 end

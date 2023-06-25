@@ -15,7 +15,7 @@ class ExamesController < ApplicationController
   # GET /exames/1
   def show
     exame_proxy = ExameProxy.new(current_usuario)
-
+    exame_proxy.set_result_strategy(NonNullResultStrategy.new)
     exames = exame_proxy.getExame(params[:id])
 
     render json: exames
@@ -27,6 +27,11 @@ class ExamesController < ApplicationController
     @exame = Exame.new(exame_params)
 
     paciente = Usuario.find_by(cpf: params[:paciente_cpf])
+
+    if paciente.nil?
+      render json: { error: 'Paciente não encontrado' }, status: :not_found
+      return
+    end
 
     @exame.paciente_id = paciente.id
 
@@ -68,6 +73,6 @@ class ExamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exame_params
-      params.require(:exame).permit(:resultado, :descricao, :anexo)
+      params.require(:exame).permit(:resultado, :descricao, :anexo, :data)
     end
 end
