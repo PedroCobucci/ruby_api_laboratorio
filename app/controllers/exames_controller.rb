@@ -7,7 +7,7 @@ class ExamesController < ApplicationController
   def index
     exame_proxy = ExameProxy.new(current_usuario)
 
-    exames = exame_proxy.getAllExames
+    exames = ActiveModelSerializers::SerializableResource.new(exame_proxy.getAllExames, each_serializer: ExameSerializer).as_json
 
     render json: exames
   end
