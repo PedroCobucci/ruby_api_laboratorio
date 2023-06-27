@@ -53,7 +53,10 @@ class ExamesController < ApplicationController
 
   # DELETE /exames/1
   def destroy
-    @exame.destroy
+    if @exame.destroy
+      head :no_content
+    else
+      render json: { error: 'Failed to delete the record' }, status: :unprocessable_entity
   end
 
   private
