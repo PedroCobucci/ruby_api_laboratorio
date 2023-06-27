@@ -30,6 +30,7 @@ class UsersController < ApplicationController
         head :no_content
       else
         render json: { error: 'Failed to delete the record' }, status: :unprocessable_entity
+      end
     end
 
     def getUsuarioByCPF
