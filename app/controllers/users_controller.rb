@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     end
 
     def usuario_params
-        params.permit(:name, :celular, :sexo, :cpf, :data_nascimento, :endereco)
+        params.permit(:name, :celular, :sexo, :cpf, :data_nascimento, :endereco, :id)
     end
 
     def check_access
